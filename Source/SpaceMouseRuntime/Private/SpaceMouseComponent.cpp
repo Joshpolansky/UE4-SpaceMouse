@@ -43,10 +43,17 @@ void USpaceMouseComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 
 	auto DeltaTranslation = FSmInputDevice::Manager->GetTranslation() * PositionScale;
 	auto DeltaRotation = FSmInputDevice::Manager->GetRotation() * RotationScale;
-	FTransform DeltaTransform = DeltaTransformCameraFrame.Inverse() * FTransform(DeltaRotation, DeltaTranslation) * DeltaTransformCameraFrame;
+	FTransform DeltaTranslationC = DeltaTransformCameraFrame.Inverse() * FTransform(DeltaTranslation) * DeltaTransformCameraFrame;
+	FTransform DeltaRotationC = DeltaTransformCameraFrame.Inverse() * FTransform(DeltaRotation) * DeltaTransformCameraFrame;
 
 	auto OwnerActor = GetOwner();
-	FTransform NewTransform = OwnerActor->GetActorTransform() * DeltaTransform;
-	OwnerActor->SetActorTransform(NewTransform);
+	auto OwnerTranform = OwnerActor->GetActorTransform();
+	
+	auto newRotation = FTransform(OwnerTranform.GetRotation()) * FTransform(DeltaRotationC.GetRotation());
+	auto newLocation = FTransform(OwnerTranform.GetLocation()) * FTransform(DeltaTranslationC.GetLocation());
+
+	OwnerActor->SetActorTransform(FTransform(newRotation.GetRotation(), newLocation.GetLocation()));
+
+
 }
 
