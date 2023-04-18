@@ -5,8 +5,8 @@
 #include "GameFramework/Actor.h"
 #include "Components/ActorComponent.h"
 #include "GameFramework/PlayerController.h"
-#include "Editor/EditorEngine.h"
 #include "Engine/LocalPlayer.h"
+#include "Engine/Engine.h"
 
 // Sets default values for this component's properties
 USpaceMouseComponent::USpaceMouseComponent()
@@ -53,7 +53,5 @@ void USpaceMouseComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 	auto newLocation = FTransform(OwnerTranform.GetLocation()) * FTransform(DeltaTranslationC.GetLocation());
 
 	OwnerActor->SetActorTransform(FTransform(newRotation.GetRotation(), newLocation.GetLocation()));
-
-
 }
 

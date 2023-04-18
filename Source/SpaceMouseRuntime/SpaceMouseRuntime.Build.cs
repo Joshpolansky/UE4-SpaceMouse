@@ -31,7 +31,6 @@ public class SpaceMouseRuntime : ModuleRules
                 "Core",
                 "CoreUObject",
                 "Engine",
-
                 "SpaceMouseReader",
                 "InputCore",
                 "InputDevice"
